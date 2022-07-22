@@ -184,6 +184,36 @@ mysql> select * from borrow;
 +------------+--------+------------+
 6 rows in set (0.00 sec)
 
+1)i.List the details of Students who are all studying in 2nd sem MCA.
+mysql> select * from student where sem="2" and branchid=(select branchid from branch where branchname="mca");
++------------+---------+---------+----------+-----+
+| usn        | name    | address | branchid | sem |
++------------+---------+---------+----------+-----+
+| 4VP21MCO30 | Puneeth | Vittal  | b1       | 2   |
++------------+---------+---------+----------+-----+
+
+ii.List the students who are not borrowed any books.
+mysql> select name from student where usn not in(select usn from borrow);
++------+
+| name |
++------+
+| Guru |
++------+
+
+vii.Display the Book names in descending order of their names.
+mysql> select bookname from book order by bookname desc;
++------------------+
+| bookname         |
++------------------+
+| Thermo Dynamics  |
+| Rearch methology |
+| DBMS             |
+| Data structure   |
+| Algorithm        |
++------------------+
+
+
+
 
 
 
