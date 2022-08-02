@@ -1,0 +1,66 @@
+mysql> create table student(usn varchar(10)
+    -> primary key not null,
+    -> name varchar(20) not null,
+    -> D0B date not null,
+    -> branch varchar(10) not null,
+    -> mark1 int(3),
+    -> mark2 int(3),
+    -> mark3 int(3),
+    -> total int(3),
+    -> GPA decimal(3,2));
+Query OK, 0 rows affected, 4 warnings (0.02 sec)
+
+mysql> desc student;
++--------+--------------+------+-----+---------+-------+
+| Field  | Type         | Null | Key | Default | Extra |
++--------+--------------+------+-----+---------+-------+
+| usn    | varchar(10)  | NO   | PRI | NULL    |       |
+| name   | varchar(20)  | NO   |     | NULL    |       |
+| D0B    | date         | NO   |     | NULL    |       |
+| branch | varchar(10)  | NO   |     | NULL    |       |
+| mark1  | int          | YES  |     | NULL    |       |
+| mark2  | int          | YES  |     | NULL    |       |
+| mark3  | int          | YES  |     | NULL    |       |
+| total  | int          | YES  |     | NULL    |       |
+| GPA    | decimal(3,2) | YES  |     | NULL    |       |
++--------+--------------+------+-----+---------+-------+
+9 rows in set (0.00 sec)
+
+mysql> insert into student(usn,name,D0B,branch) values("4VP21MC033","Rashmi","2001-04-08","MCA");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into student(usn,name,D0B,branch) values("4VP21MC045","Shruthi","2001-05-04","MCA");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into student(usn,name,D0B,branch) values("4VP21MC030","Puneeth","2000-06-11","MBA");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into student(usn,name,D0B,branch) values("4VP21MC028","Prathiksha","1999-07-10","MBA");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into student(usn,name,D0B,branch) values("4VP21MC014","Geethanjali","2001-03-21","MCA");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from student;
++------------+-------------+------------+--------+-------+-------+-------+-------+------+
+| usn        | name        | D0B        | branch | mark1 | mark2 | mark3 | total | GPA  |
++------------+-------------+------------+--------+-------+-------+-------+-------+------+
+| 4VP21MC014 | Geethanjali | 2001-03-21 | MCA    |  NULL |  NULL |  NULL |  NULL | NULL |
+| 4VP21MC028 | Prathiksha  | 1999-07-10 | MBA    |  NULL |  NULL |  NULL |  NULL | NULL |
+| 4VP21MC030 | Puneeth     | 2000-06-11 | MBA    |  NULL |  NULL |  NULL |  NULL | NULL |
+| 4VP21MC033 | Rashmi      | 2001-04-08 | MCA    |  NULL |  NULL |  NULL |  NULL | NULL |
+| 4VP21MC045 | Shruthi     | 2001-05-04 | MCA    |  NULL |  NULL |  NULL |  NULL | NULL |
++------------+-------------+------------+--------+-------+-------+-------+-------+------+
+5 rows in set (0.00 sec)
+
+
+iii. Find the students who born on a particular year of birth from the date_of_birth column.
+
+mysql> select name from student where year(D0B)="1999";
++------------+
+| name       |
++------------+
+| Prathiksha |
++------------+
+1 row in set (0.00 sec)
+

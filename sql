@@ -212,6 +212,59 @@ mysql> select bookname from book order by bookname desc;
 | Algorithm        |
 +------------------+
 
+viii.List the details of students who borrowed the books which are all published by the same
+publisher.
+
+
+iv.Display the number of books written by each Author.
+
+select count(authorid) from book group by authorid;
++-----------------+
+| count(authorid) |
++-----------------+
+|               1 |
+|               1 |
+|               2 |
+|               1 |
++-----------------+
+4 rows in set (0.00 sec)
+
+along with author name
+mysql> select author.authorname,count(author.authorid) from author,book where author.authorid=book
++-------------------+------------------------+
+| authorname        | count(author.authorid) |
++-------------------+------------------------+
+| Rames Elmasri     |                      1 |
+| Baidyanath Mishra |                      1 |
+| Elis Horowits     |                      2 |
+| Yunus             |                      1 |
++-------------------+------------------------+
+4 rows in set (0.00 sec)
+
+v.Display the student details who borrowed more than two books.
+select student.* from student,borrow where student.usn=borrow.usn group by borrow.usn having count(borrow.usn)>1;
++------------+---------+---------+----------+-----+
+| usn        | name    | address | branchid | sem |
++------------+---------+---------+----------+-----+
+| 4VP21MCO45 | Shruthi | Kumbra  | b2       | 4   |
++------------+---------+---------+----------+-----+
+1 row in set (0.00 sec)
+
+vi.Display the student details who borrowed books of more than one Author.
+mysql> select * from student s
+    -> where
+    -> exists
+    -> (select br.usn
+    -> from borrow br,book bk
+    -> where br.bookid=bk.bookid and br.usn=s.usn
+    -> group by usn
+    -> having count(distinct authorid)>1);
++------------+---------+---------+----------+-----+
+| usn        | name    | address | branchid | sem |
++------------+---------+---------+----------+-----+
+| 4VP21MCO45 | Shruthi | Kumbra  | b2       | 4   |
++------------+---------+---------+----------+-----+
+1 row in set (0.00 sec)
 
 
 
