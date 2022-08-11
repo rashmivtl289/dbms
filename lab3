@@ -254,6 +254,12 @@ select * from player
     -> where PID not in (select CaptainId from team)
     -> and PID in(select manofthematch from matches group by manofthematch having count(*)>=2);
     
++-----+--------+-----+------+
+| PID | Pname  | age | TID  |
++-----+--------+-----+------+
+| 1   | sachin |  33 | 123  |
++-----+--------+-----+------+
+1 row in set (0.00 sec)
 
 
 
