@@ -204,6 +204,59 @@ mysql> select * from playerphone;
 +------+------------+
 4 rows in set (0.00 sec)
 
+mysql> select Pname,Tname,age from player p,team t where p.TID=t.TID and age in (select min(age) from player);
++-------+-----------+-----+
+| Pname | Tname     | age |
++-------+-----------+-----+
+| kohli | derdevils |  23 |
++-------+-----------+-----+
+
+select Sname from stadium  where SID=(select SID from matches  group by SID order by count(*) desc limit 1);
++------------+
+| Sname      |
++------------+
+| chinaswamy |
++------------+
+mysql> select*from stadium  where SID=(select SID from matches  group by SID order by count(*) desc limit 1);
++-----+------------+---------+-----------+--------+
+| SID | Sname      | pincode | city      | area   |
++-----+------------+---------+-----------+--------+
+| 111 | chinaswamy |   56001 | bangalore | mgroad |
++-----+------------+---------+-----------+--------+
+1 row in set (0.00 sec)
+update team set CaptainId=2 where TID=123;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update team set CaptainId=3 where TID=124;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update team set CaptainId=5 where TID=125;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update team set CaptainId=4 where TID=126;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+select * from team;
++-----+-----------+--------+-----------+-----------+
+| TID | Tname     | Coach  | CaptainId | city      |
++-----+-----------+--------+-----------+-----------+
+| 123 | rcb       | sunil  | 2         | Bangalore |
+| 124 | csk       | laxman | 3         | Chenai    |
+| 125 | royals    | singh  | 5         | rajastan  |
+| 126 | derdevils | sehwag | 4         | dehli     |
++-----+-----------+--------+-----------+-----------+
+
+select * from player
+    -> where PID not in (select CaptainId from team)
+    -> and PID in(select manofthematch from matches group by manofthematch having count(*)>=2);
+    
+
+
+
 
 
 
