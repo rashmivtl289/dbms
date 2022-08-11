@@ -63,9 +63,14 @@ mysql> desc stadium;
 | area    | varchar(10) | NO   |     | NULL    |       |
 +---------+-------------+------+-----+---------+-------+
 
-mysql> create table matches(MID varchar(20) primary key not null, Mdate date, time time, SID varchar(20),foreign key(SID)references stadium(SI
-D), team1id varchar(20),foreign key(team1id)references team(TID), team2id varchar(20),foreign key(team2id)references team(TID), winningteamid
-varchar(20),foreign key(winningteamid)references team(TID),  manofthematch varchar(20),foreign key(manofthematch)references player(PID));
+mysql> create table matches(MID varchar(20) primary key not null, 
+Mdate date, 
+time time, 
+SID varchar(20),foreign key(SID)references stadium(SID), 
+team1id varchar(20),foreign key(team1id)references team(TID), 
+team2id varchar(20),foreign key(team2id)references team(TID),
+winningteamid varchar(20),foreign key(winningteamid)references team(TID),  
+manofthematch varchar(20),foreign key(manofthematch)references player(PID));
 Query OK, 0 rows affected (0.04 sec)
 
 mysql> desc matches;
@@ -94,5 +99,112 @@ desc playerphone;
 +-------+-------------+------+-----+---------+-------+
 
 alter table team add foreign key(CaptainId)references player(PID);
+
+mysql> insert into stadium values('111','chinaswamy',56001,'bangalore','mgroad');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into stadium values('222','kotla',56001,'dehli','highway');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into stadium values('333','international',88801,'chennai','tr nagar');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into stadium values('444','ksca',56098,'bangalore','peenya');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into stadium values('555','csca',609035,'coachin','beach road');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from stadium;
++-----+---------------+---------+-----------+------------+
+| SID | Sname         | pincode | city      | area       |
++-----+---------------+---------+-----------+------------+
+| 111 | chinaswamy    |   56001 | bangalore | mgroad     |
+| 222 | kotla         |   56001 | dehli     | highway    |
+| 333 | international |   88801 | chennai   | tr nagar   |
+| 444 | ksca          |   56098 | bangalore | peenya     |
+| 555 | csca          |  609035 | coachin   | beach road |
++-----+---------------+---------+-----------+------------+
+
+mysql> insert into player values('1','sachin',33,'123');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into player values('2','dravid',32,'124');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into player values('3','dhoni',30,'124');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into player values('4','raina',30,'125');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into player values('5','kohli',23,'126');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from player;
++-----+--------+-----+------+
+| PID | Pname  | age | TID  |
++-----+--------+-----+------+
+| 1   | sachin |  33 | 123  |
+| 2   | dravid |  32 | 124  |
+| 3   | dhoni  |  30 | 124  |
+| 4   | raina  |  30 | 125  |
+| 5   | kohli  |  23 | 126  |
++-----+--------+-----+------+
+5 rows in set (0.00 sec)
+
+mysql> insert into values('101','2010-01-17','10','111','123','124','123','1');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'values('101','2010-01-17','10','111','123','124','123','1')' at line 1
+mysql> insert into matches values('101','2010-01-17','10','111','123','124','123','1');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into matches values('101','2010-01-17','10','222','124','126','126','5');
+ERROR 1062 (23000): Duplicate entry '101' for key 'matches.PRIMARY'
+mysql> insert into matches values('102','2010-01-17','10','222','124','126','126','5');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into matches values('103','2012-07-18','11','111','125','126','126','5');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into matches values('104','2015-06-17','2','111','125','123','123','1');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from matches;
++-----+------------+----------+------+---------+---------+---------------+---------------+
+| MID | Mdate      | time     | SID  | team1id | team2id | winningteamid | manofthematch |
++-----+------------+----------+------+---------+---------+---------------+---------------+
+| 101 | 2010-01-17 | 00:00:10 | 111  | 123     | 124     | 123           | 1             |
+| 102 | 2010-01-17 | 00:00:10 | 222  | 124     | 126     | 126           | 5             |
+| 103 | 2012-07-18 | 00:00:11 | 111  | 125     | 126     | 126           | 5             |
+| 104 | 2015-06-17 | 00:00:02 | 111  | 125     | 123     | 123           | 1             |
++-----+------------+----------+------+---------+---------+---------------+---------------+
+
+insert into playerphone values("1","9087657443");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into playerphone values("1","9987632100");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into playerphone values("2","9987632100");
+ERROR 1062 (23000): Duplicate entry '9987632100' for key 'playerphone.PRIMARY'
+mysql> insert into playerphone values("2","9987632101");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into playerphone values("3","9945672101");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from playerphone;
++------+------------+
+| PID  | phone      |
++------+------------+
+| 1    | 9087657443 |
+| 1    | 9987632100 |
+| 2    | 9987632101 |
+| 3    | 9945672101 |
++------+------------+
+4 rows in set (0.00 sec)
+
+
+
 
 
