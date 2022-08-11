@@ -92,3 +92,85 @@ mysql> select * from student;
 +------------+-------------+------------+--------+-------+-------+-------+-------+------+
 5 rows in set (0.01 sec)
 
+mysql> update student set total=mark1+mark2+mark3;
+Query OK, 5 rows affected (0.01 sec)
+Rows matched: 5  Changed: 5  Warnings: 0
+
+mysql> select * from student;
++------------+-------------+------------+--------+-------+-------+-------+-------+------+
+| usn        | name        | D0B        | branch | mark1 | mark2 | mark3 | total | GPA  |
++------------+-------------+------------+--------+-------+-------+-------+-------+------+
+| 4VP21MC014 | Geethanjali | 2001-03-21 | MCA    |    70 |    80 |    28 |   178 | NULL |
+| 4VP21MC028 | Prathiksha  | 1999-07-10 | MBA    |    45 |    60 |    99 |   204 | NULL |
+| 4VP21MC030 | Puneeth     | 2000-06-11 | MBA    |    55 |    60 |    99 |   214 | NULL |
+| 4VP21MC033 | Rashmi      | 2001-04-08 | MCA    |    90 |    89 |    79 |   258 | NULL |
+| 4VP21MC045 | Shruthi     | 2001-05-04 | MCA    |    90 |    70 |    90 |   250 | NULL |
++------------+-------------+------------+--------+-------+-------+-------+-------+------+
+5 rows in set (0.00 sec)
+
+mysql> update student set GPA=total/3;
+ERROR 1264 (22003): Out of range value for column 'GPA' at row 1
+mysql> alter table student modify column GPA Float;
+Query OK, 5 rows affected (0.04 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> update student set GPA=total/3;
+Query OK, 5 rows affected (0.01 sec)
+Rows matched: 5  Changed: 5  Warnings: 0
+
+mysql> select * from student;
++------------+-------------+------------+--------+-------+-------+-------+-------+---------+
+| usn        | name        | D0B        | branch | mark1 | mark2 | mark3 | total | GPA     |
++------------+-------------+------------+--------+-------+-------+-------+-------+---------+
+| 4VP21MC014 | Geethanjali | 2001-03-21 | MCA    |    70 |    80 |    28 |   178 | 59.3333 |
+| 4VP21MC028 | Prathiksha  | 1999-07-10 | MBA    |    45 |    60 |    99 |   204 |      68 |
+| 4VP21MC030 | Puneeth     | 2000-06-11 | MBA    |    55 |    60 |    99 |   214 | 71.3333 |
+| 4VP21MC033 | Rashmi      | 2001-04-08 | MCA    |    90 |    89 |    79 |   258 |      86 |
+| 4VP21MC045 | Shruthi     | 2001-05-04 | MCA    |    90 |    70 |    90 |   250 | 83.3333 |
++------------+-------------+------------+--------+-------+-------+-------+-------+---------+
+5 rows in set (0.00 sec)
+mysql> select * from student where Branch="MCA";
++------------+-------------+------------+--------+-------+-------+-------+-------+---------+
+| usn        | name        | D0B        | branch | mark1 | mark2 | mark3 | total | GPA     |
++------------+-------------+------------+--------+-------+-------+-------+-------+---------+
+| 4VP21MC014 | Geethanjali | 2001-03-21 | MCA    |    70 |    80 |    28 |   178 | 59.3333 |
+| 4VP21MC033 | Rashmi      | 2001-04-08 | MCA    |    90 |    89 |    79 |   258 |      86 |
+| 4VP21MC045 | Shruthi     | 2001-05-04 | MCA    |    90 |    70 |    90 |   250 | 83.3333 |
++------------+-------------+------------+--------+-------+-------+-------+-------+---------+
+3 rows in set (0.00 sec)
+
+select max(GPA),branch from student group by branch;
++----------+--------+
+| max(GPA) | branch |
++----------+--------+
+|       86 | MCA    |
+|  71.3333 | MBA    |
++----------+--------+
+
+mysql> select name from student where name like "S%";
++---------+
+| name    |
++---------+
+| Shruthi |
++---------+
+
+mysql> select name from student where name like "%ha";
++------------+
+| name       |
++------------+
+| Prathiksha |
++------------+
+
+delete from student where USN="4VP21MC014";
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from student;
++------------+------------+------------+--------+-------+-------+-------+-------+---------+
+| usn        | name       | D0B        | branch | mark1 | mark2 | mark3 | total | GPA     |
++------------+------------+------------+--------+-------+-------+-------+-------+---------+
+| 4VP21MC028 | Prathiksha | 1999-07-10 | MBA    |    45 |    60 |    99 |   204 |      68 |
+| 4VP21MC030 | Puneeth    | 2000-06-11 | MBA    |    55 |    60 |    99 |   214 | 71.3333 |
+| 4VP21MC033 | Rashmi     | 2001-04-08 | MCA    |    90 |    89 |    79 |   258 |      86 |
+| 4VP21MC045 | Shruthi    | 2001-05-04 | MCA    |    90 |    70 |    90 |   250 | 83.3333 |
++------------+------------+------------+--------+-------+-------+-------+-------+---------+
+
