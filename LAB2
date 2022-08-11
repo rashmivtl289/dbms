@@ -64,3 +64,31 @@ mysql> select name from student where year(D0B)="1999";
 +------------+
 1 row in set (0.00 sec)
 
+mysql> update student set mark1="70",mark2="80",mark3="28" where USN="4VP21MC014";
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update student set mark1="45",mark2="60",mark3="99" where USN="4VP21MC028";
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update student set mark1="55",mark2="60",mark3="99" where USN="4VP21MC030";
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update student set mark1="90",mark2="89",mark3="79" where USN="4VP21MC033";
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from student;
++------------+-------------+------------+--------+-------+-------+-------+-------+------+
+| usn        | name        | D0B        | branch | mark1 | mark2 | mark3 | total | GPA  |
++------------+-------------+------------+--------+-------+-------+-------+-------+------+
+| 4VP21MC014 | Geethanjali | 2001-03-21 | MCA    |    70 |    80 |    28 |  NULL | NULL |
+| 4VP21MC028 | Prathiksha  | 1999-07-10 | MBA    |    45 |    60 |    99 |  NULL | NULL |
+| 4VP21MC030 | Puneeth     | 2000-06-11 | MBA    |    55 |    60 |    99 |  NULL | NULL |
+| 4VP21MC033 | Rashmi      | 2001-04-08 | MCA    |    90 |    89 |    79 |  NULL | NULL |
+| 4VP21MC045 | Shruthi     | 2001-05-04 | MCA    |    90 |    70 |    90 |  NULL | NULL |
++------------+-------------+------------+--------+-------+-------+-------+-------+------+
+5 rows in set (0.01 sec)
+
