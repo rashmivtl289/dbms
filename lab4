@@ -1,0 +1,188 @@
+mysql> create database VP21MC033_tourist;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> use VP21MC033_tourist;
+Database changed
+mysql> create table touristplace(tpid varchar(10) primary key,
+    -> name varchar(10) not null,
+    -> state varchar(10) not null,
+    -> history varchar(20) not null);
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> create table tourist(tid varchar(10) primary key,
+    -> name varchar(10) not null,
+    -> age int(2) not null,
+    -> country varchar(10) not null);
+Query OK, 0 rows affected, 1 warning (0.02 sec)
+
+mysql> create table visit(tid varchar(10),foreign key(tid) references tourist(tid),
+    -> tpid varchar(10),foreign key(tpid) references touristplace(tpid),
+    -> visitdate date);
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> create table email(tid varchar(10),froeign key(tid) references tourist(tid),
+    -> email varchar(10) not null unique);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'key(tid) references tourist(tid),
+email varchar(10) not null unique)' at line 1
+mysql> create table email(tid varchar(10),foreign key(tid) references tourist(tid), email varchar(10) not null unique);
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> desc visit;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| tid       | varchar(10) | YES  | MUL | NULL    |       |
+| tpid      | varchar(10) | YES  | MUL | NULL    |       |
+| visitdate | date        | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> desc touristplace;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| tpid    | varchar(10) | NO   | PRI | NULL    |       |
+| name    | varchar(10) | NO   |     | NULL    |       |
+| state   | varchar(10) | NO   |     | NULL    |       |
+| history | varchar(20) | NO   |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> desc tourist;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| tid     | varchar(10) | NO   | PRI | NULL    |       |
+| name    | varchar(10) | NO   |     | NULL    |       |
+| age     | int         | NO   |     | NULL    |       |
+| country | varchar(10) | NO   |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> desc email;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| tid   | varchar(10) | YES  | MUL | NULL    |       |
+| email | varchar(10) | NO   | PRI | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+
+mysql> insert into touristplace values("tp1","Hampi","karnataka","temples","250");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into touristplace values("tp2","mangalore","karnataka","fishes","150");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into touristplace values("tp3","bijapur","karnataka","golgumbaz","450");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into touristplace values("tp4","Goa","Goa","beach","350");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into touristplace values("tp5","ooty","tamilnadu","waterfalls","200");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from touristplace;
++------+-----------+-----------+------------+-----+
+| tpid | name      | state     | history    | KM  |
++------+-----------+-----------+------------+-----+
+| tp1  | Hampi     | karnataka | temples    | 250 |
+| tp2  | mangalore | karnataka | fishes     | 150 |
+| tp3  | bijapur   | karnataka | golgumbaz  | 450 |
+| tp4  | Goa       | Goa       | beach      | 350 |
+| tp5  | ooty      | tamilnadu | waterfalls | 200 |
++------+-----------+-----------+------------+-----+
+5 rows in set (0.01 sec)
+
+mysql> insert into tourist values("t1","rashmi","21","India");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into tourist values("t2","shruthi","24","PK");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into tourist values("t3","puneeth","21","Afgan");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into tourist values("t4","geetha","20","Aus");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into tourist values("t5","sajith","22","Chaina");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from tourist;
++-----+---------+-----+---------+
+| tid | name    | age | country |
++-----+---------+-----+---------+
+| t1  | rashmi  |  21 | India   |
+| t2  | shruthi |  24 | PK      |
+| t3  | puneeth |  21 | Afgan   |
+| t4  | geetha  |  20 | Aus     |
+| t5  | sajith  |  22 | Chaina  |
++-----+---------+-----+---------+
+5 rows in set (0.00 sec)
+
+mysql> insert into visit values("t1","tp1","2011-08-11");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into visit values("t2","tp1","2012-05-13");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into visit values("t3","tp1","2012-06-13");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into visit values("t1","tp1","2012-06-19");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into visit values("t1","tp2","2012-06-19");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into visit values("t1","tp3","2016-07-29");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> delete from visit where date="2011-08-11";
+ERROR 1054 (42S22): Unknown column 'date' in 'where clause'
+mysql> delete from visit where visitdate="2011-08-11";
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from visit;
++------+------+------------+
+| tid  | tpid | visitdate  |
++------+------+------------+
+| t2   | tp1  | 2012-05-13 |
+| t3   | tp1  | 2012-06-13 |
+| t1   | tp1  | 2012-06-19 |
+| t1   | tp2  | 2012-06-19 |
+| t1   | tp3  | 2016-07-29 |
++------+------+------------+
+5 rows in set (0.00 sec)
+
+mysql> insert into email values("t1","rashmi@289");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into email values("t2","shru@289");
+Query OK, 1 row affected (0.00 sec)
+
+
+i. List the state name which is having maximum number of tourist places.
+mysql> select state from touristplace
+    -> group by state
+    -> order by count(state) desc limit 1;
++-----------+
+| state     |
++-----------+
+| karnataka |
++-----------+
+1 row in set (0.00 sec)
+
+ii. List details of Tourist place where maximum number of tourists visited.
+mysql> select * from touristplace where tpid =(select tpid from visit  group by tpid order by count(tpid) desc limit 1);
++------+-------+-----------+---------+-----+
+| tpid | name  | state     | history | KM  |
++------+-------+-----------+---------+-----+
+| tp1  | Hampi | karnataka | temples | 250 |
++------+-------+-----------+---------+-----+
+1 row in set (0.00 sec)
+
+
