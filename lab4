@@ -185,4 +185,55 @@ mysql> select * from touristplace where tpid =(select tpid from visit  group by 
 +------+-------+-----------+---------+-----+
 1 row in set (0.00 sec)
 
+iii. List the details of tourists visited all tourist places of the state “KARNATAKA”.
+mysql> select * from tourist  where tid in (select tid from visit,touristplace where visit.tpid=touristplace.tpid and state="karnataka" group
+by tid having count(state) in (select count(state) from touristplace where state="karnataka"));
++-----+--------+-----+---------+
+| tid | name   | age | country |
++-----+--------+-----+---------+
+| t1  | rashmi |  21 | India   |
++-----+--------+-----+---------+
+
+    or
+(proper working)
+mysql> select * from tourist  where tid in (select tid from visit,touristplace where visit.tpid=touristplace.tpid and state="karnataka" group
+by tid having count(distinct touristplace.tpid) in (select count(tpid) from touristplace where state="karnataka"));
++-----+--------+-----+---------+
+| tid | name   | age | country |
++-----+--------+-----+---------+
+| t1  | rashmi |  21 | India   |
++-----+--------+-----+---------+
+1 row in set (0.00 sec)
+
+mysql> select * from tourist  where tid in(select tid  from visit,touristplace   where visit.tpid=touristplace.tpid group by tid   having count(distinct state) in (select count(distinct state)  from touristplace));
++-----+---------+-----+---------+
+| tid | name    | age | country |
++-----+---------+-----+---------+
+| t2  | shruthi |  24 | PK      |
++-----+---------+-----+---------+
+1 row in set (0.00 sec)
+
+
+iv. Display the details of the tourists visited at least one tourist place of the state, but visited
+all states tourist places.
+
+mysql> select * from tourist  where tid in(select tid  from visit,touristplace   where visit.tpid=touristplace.tpid group by tid   having count(distinct state) in (select count(distinct state)  from touristplace));
++-----+---------+-----+---------+
+| tid | name    | age | country |
++-----+---------+-----+---------+
+| t2  | shruthi |  24 | PK      |
++-----+---------+-----+---------+
+1 row in set (0.00 sec)
+
+v. Display the details of the tourist place visited by the tourists of all country.
+mysql> select * from touristplace where tpid in(
+    -> select tpid from visit,tourist where visit.tid=tourist.tid group by tpid having count( distinct country)=(select count(distinct country) from tourist));
++------+-------+-----------+---------+-----+
+| tpid | name  | state     | history | KM  |
++------+-------+-----------+---------+-----+
+| tp1  | Hampi | karnataka | temples | 250 |
++------+-------+-----------+---------+-----+
+1 row in set (0.01 sec)
+
+
 
