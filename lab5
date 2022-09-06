@@ -260,4 +260,32 @@ mysql> select state from constituency group by state having count(state) limit 1
 | karnataka |
 +-----------+
 
+iii. Create a stored procedure to insert the tuple into the voter table by checking the voter
+age. If voter’s age is at least 18 years old, then insert the tuple into the voter else display the
+“Not an eligible voter msg” .
 
+create one procedure......
+
+mysql> source abc.sql;
+Query OK, 0 rows affected, 1 warning (0.01 sec)
+
+mysql> call abc("v7","priya",16,"c3","ca4");
++--------------------+
+| msg                |
++--------------------+
+| voter not eligible |
++--------------------+
+1 row in set (0.00 sec)
+
+mysql> call abc("v8","hari",26,"c3","ca4");
++--------------+
+| msg          |
++--------------+
+| row inserted |
++--------------+
+1 row in set (0.01 sec)
+
+
+...........
+mysql> drop procedure abc;   //for drop.
+.................
