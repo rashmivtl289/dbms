@@ -264,7 +264,7 @@ iii. Create a stored procedure to insert the tuple into the voter table by check
 age. If voter’s age is at least 18 years old, then insert the tuple into the voter else display the
 “Not an eligible voter msg” .
 
-create one procedure......
+create one procedure......   (abc.sql)
 
 mysql> source abc.sql;
 Query OK, 0 rows affected, 1 warning (0.01 sec)
