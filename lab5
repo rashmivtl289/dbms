@@ -1,0 +1,262 @@
+mysql> create table candidate(canid varchar(10) primary key, cname varchar(10) not null, phone int(10) not null, age int(2) not null, state varchar(10) not null, pid varchar(10),foreign key (pid) references party(pid), cid varchar(10),foreign key (cid) references constituency(cid));
+Query OK, 0 rows affected, 2 warnings (0.03 sec)
+
+mysql> desc candidate;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| canid | varchar(10) | NO   | PRI | NULL    |       |
+| cname | varchar(10) | NO   |     | NULL    |       |
+| phone | int         | NO   |     | NULL    |       |
+| age   | int         | NO   |     | NULL    |       |
+| state | varchar(10) | NO   |     | NULL    |       |
+| pid   | varchar(10) | YES  | MUL | NULL    |       |
+| cid   | varchar(10) | YES  | MUL | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+
+mysql> create table voter(vid varchar(10) primary key,
+    -> vname varchar(10) not null,
+    -> age int (2) not null,
+    -> cid varchar(10),foreign key (cid) references constituency(cid),
+    -> canid varchar(10),foreign key (canid) references candidate(canid));
+Query OK, 0 rows affected, 1 warning (0.02 sec)
+
+mysql> desc voter;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| vid   | varchar(10) | NO   | PRI | NULL    |       |
+| vname | varchar(10) | NO   |     | NULL    |       |
+| age   | int         | NO   |     | NULL    |       |
+| cid   | varchar(10) | YES  | MUL | NULL    |       |
+| canid | varchar(10) | YES  | MUL | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+
+mysql> create table address(vid varchar(10),foreign key(vid) references voter(vid), houseno varchar(10) not null, city varchar(10) not null, state varchar(10) not null, pincode int(6) not null);
+Query OK, 0 rows affected, 1 warning (0.05 sec)
+
+mysql> desc address;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| vid     | varchar(10) | YES  | MUL | NULL    |       |
+| houseno | varchar(10) | NO   |     | NULL    |       |
+| city    | varchar(10) | NO   |     | NULL    |       |
+| state   | varchar(10) | NO   |     | NULL    |       |
+| pincode | int         | NO   |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+5 rows in set (0.01 sec)
+
+mysql> create table contest(cid varchar(10),foreign key (cid) references constituency(cid), canid varchar(10),foreign key (canid) references candidate(canid));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> desc contest;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| cid   | varchar(10) | YES  | MUL | NULL    |       |
+| canid | varchar(10) | YES  | MUL | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+
+mysql> insert into constituency values("c1","mangalore","karnataka",50);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into constituency values("c2","bangalore","karnataka",100);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into constituency values("c3","puducheri","tamilnad",75);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into constituency values("c4","trishur","kerala",55);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into constituency values("c5","pune","maharastra",25);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from constituency;
++-----+-----------+------------+--------------+
+| cid | name      | state      | no_of_voters |
++-----+-----------+------------+--------------+
+| c1  | mangalore | karnataka  |           50 |
+| c2  | bangalore | karnataka  |          100 |
+| c3  | puducheri | tamilnad   |           75 |
+| c4  | trishur   | kerala     |           55 |
+| c5  | pune      | maharastra |           25 |
++-----+-----------+------------+--------------+
+5 rows in set (0.00 sec)
+
+mysql> insert into party values("p1","RS","rose","c2");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into party values("p2","PRK","bike","c1");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into party values("p3","SP","cycle","c3");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into party values("p4","PBM","apple","c5");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into party values("p5","GKS","jeep","c4");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from party;
++-----+-------+--------+------+
+| pid | pname | symbol | cid  |
++-----+-------+--------+------+
+| p1  | RS    | rose   | c2   |
+| p2  | PRK   | bike   | c1   |
+| p3  | SP    | cycle  | c3   |
+| p4  | PBM   | apple  | c5   |
+| p5  | GKS   | jeep   | c4   |
++-----+-------+--------+------+
+5 rows in set (0.00 sec)
+
+mysql> insert into candidate values("ca1","manohara",908752,30,"karnataka","p1","c1");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into candidate values("ca2","vani",235678,33,"maharastra","p3","c4");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into candidate values("ca3","gopal",678934,28,"tamilnad","p2","c5");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into candidate values("ca4","shiv",239067,40,"kerala","p5","c3");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into candidate values("ca5","jayanthi",125672,39,"karnataka","p4","c2");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from candidate;
++-------+----------+--------+-----+------------+------+------+
+| canid | cname    | phone  | age | state      | pid  | cid  |
++-------+----------+--------+-----+------------+------+------+
+| ca1   | manohara | 908752 |  30 | karnataka  | p1   | c1   |
+| ca2   | vani     | 235678 |  33 | maharastra | p3   | c4   |
+| ca3   | gopal    | 678934 |  28 | tamilnad   | p2   | c5   |
+| ca4   | shiv     | 239067 |  40 | kerala     | p5   | c3   |
+| ca5   | jayanthi | 125672 |  39 | karnataka  | p4   | c2   |
++-------+----------+--------+-----+------------+------+------+
+5 rows in set (0.00 sec)
+
+mysql> insert into voter values("v1","rashmi","20","c1","ca1");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into voter values("v2","puneeth","21","c3","ca4");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into voter values("v3","shruthi","25","c5","ca2");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into voter values("v4","geetha","20","c2","ca3");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into voter values("v5","prathiksha","22","c4","ca5");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from voter;
++-----+------------+-----+------+-------+
+| vid | vname      | age | cid  | canid |
++-----+------------+-----+------+-------+
+| v1  | rashmi     |  20 | c1   | ca1   |
+| v2  | puneeth    |  21 | c3   | ca4   |
+| v3  | shruthi    |  25 | c5   | ca2   |
+| v4  | geetha     |  20 | c2   | ca3   |
+| v5  | prathiksha |  22 | c4   | ca5   |
++-----+------------+-----+------+-------+
+5 rows in set (0.00 sec)
+
+mysql> update constituency set canid="ca2" where cid="c1";
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update constituency set canid="ca4" where cid="c2";
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update constituency set canid="ca5" where cid="c3";
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update constituency set canid="ca2" where cid="c4";
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update constituency set canid="ca1" where cid="c5";
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from constituency;
++-----+-----------+------------+--------------+-------+
+| cid | name      | state      | no_of_voters | canid |
++-----+-----------+------------+--------------+-------+
+| c1  | mangalore | karnataka  |           50 | ca2   |
+| c2  | bangalore | karnataka  |          100 | ca4   |
+| c3  | puducheri | tamilnad   |           75 | ca5   |
+| c4  | trishur   | kerala     |           55 | ca2   |
+| c5  | pune      | maharastra |           25 | ca1   |
++-----+-----------+------------+--------------+-------+
+5 rows in set (0.00 sec)
+
+mysql> insert into contest values("c1","ca1");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into contest values("c3","ca5");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into contest values("c2","ca3");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into contest values("c4","ca2");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into contest values("c5","ca4");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from contest;
++------+-------+
+| cid  | canid |
++------+-------+
+| c1   | ca1   |
+| c3   | ca5   |
+| c2   | ca3   |
+| c4   | ca2   |
+| c5   | ca4   |
++------+-------+
+5 rows in set (0.00 sec)
+
+
+
+
+mysql> select * from contest;   //refer for i) query
++------+-------+
+| cid  | canid |
++------+-------+
+| c1   | ca1   |
+| c3   | ca5   |
+| c2   | ca3   |
+| c4   | ca2   |
+| c5   | ca4   |
+| c1   | ca3   |
+| c3   | ca3   |
++------+-------+
+
+i. List the details of the candidates who are contesting from more than one constituencies
+which are belongs to different states.
+
+mysql> select * from candidate where canid in  ( select contest.canid from contest,constituency where contest.cid=constituency.cid group by canid having count(distinct(state))>1);
++-------+-------+--------+-----+----------+------+------+
+| canid | cname | phone  | age | state    | pid  | cid  |
++-------+-------+--------+-----+----------+------+------+
+| ca3   | gopal | 678934 |  28 | tamilnad | p2   | c5   |
++-------+-------+--------+-----+----------+------+------+
+1 row in set (0.00 sec)
+
+ii. Display the state name having maximum number of constituencies.
+mysql> select state from constituency group by state having count(state) limit 1;
++-----------+
+| state     |
++-----------+
+| karnataka |
++-----------+
+
