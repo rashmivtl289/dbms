@@ -260,3 +260,4 @@ mysql> select state from constituency group by state having count(state) limit 1
 | karnataka |
 +-----------+
 
+
