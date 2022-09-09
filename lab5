@@ -314,7 +314,7 @@ new.sql
 DELIMITER //
 create procedure new(name varchar(20))
 begin
-select no_of_voters from constituency where name=name;
+select no_of_voters from constituency where name=cname;
 end //
 DELIMITER ;
 
