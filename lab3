@@ -263,6 +263,14 @@ select * from player
 
 
 
+mysql> select * from team where TID =(select winningteamid from matches group by(winningteamid) order by (winningteamid) desc limit 1);
++-----+-----------+--------+-----------+-------+
+| TID | Tname     | Coach  | CaptainId | city  |
++-----+-----------+--------+-----------+-------+
+| 126 | derdevils | sehwag | 4         | dehli |
++-----+-----------+--------+-----------+-------+
+1 row in set (0.00 sec)
+
 
 
 
