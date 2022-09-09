@@ -266,6 +266,22 @@ age. If voter’s age is at least 18 years old, then insert the tuple into the v
 
 create one procedure......   (abc.sql)
 
+DELIMITER //
+create procedure abc(IN vid varchar(10),IN vname varchar(10),IN age int(2),IN cid varchar(10),IN canid varchar(10))
+begin
+declare msg varchar(20);
+if age>=18 then
+insert into voter(vid,vname,age,cid,canid)values(vid,vname,age,cid,canid);
+set msg="row inserted";
+else
+set msg="voter not eligible";
+end if;
+select msg;
+end //
+DELIMITER ;
+
+
+
 mysql> source abc.sql;
 Query OK, 0 rows affected, 1 warning (0.01 sec)
 
@@ -289,3 +305,42 @@ mysql> call abc("v8","hari",26,"c3","ca4");
 ...........
 mysql> drop procedure abc;   //for drop.
 .................
+
+iv. Create a stored procedure to display the number_of_voters in the specified constituency.
+Where the constituency name is passed as an argument to the stored procedure.
+
+new.sql
+
+DELIMITER //
+create procedure new(name varchar(20))
+begin
+select no_of_voters from constituency where name=name;
+end //
+DELIMITER ;
+
+mysql> source new.sql;
+
+mysql> call new("pune");
++--------------+
+| no_of_voters |
++--------------+
+|           25 |
++--------------+
+
+v. Create a TRIGGER to UPDATE the count of “ Number_of_voters” of the respective
+constituency in “CONSTITUENCY” table , AFTER inserting a tuple into the “VOTERS” table.
+
+xyz.sql
+DELIMITER $$
+create trigger xyz after insert on voter for each row
+begin
+update constituency set constituency.no_of_voters=constituency.no_of_voters+3
+where cid=new.cid;
+end$$
+
+mysql> source xyz.sql;
+
+
+
+
+
