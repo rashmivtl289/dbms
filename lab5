@@ -340,6 +340,20 @@ end$$
 
 mysql> source xyz.sql;
 
+insert into voter values("v9","sibin",34,"c1","ca3");
+
+mysql> select * from constituency;
+    -> $$
++-----+-----------+------------+--------------+-------+
+| cid | name      | state      | no_of_voters | canid |
++-----+-----------+------------+--------------+-------+
+| c1  | mangalore | karnataka  |           53 | ca2   |
+| c2  | bangalore | karnataka  |          100 | ca4   |
+| c3  | puducheri | tamilnad   |           75 | ca5   |
+| c4  | trishur   | kerala     |           55 | ca2   |
+| c5  | pune      | maharastra |           25 | ca1   |
++-----+-----------+------------+--------------+-------+
+5 rows in set (0.00 sec)
 
 
 
